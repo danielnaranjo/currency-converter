@@ -6,6 +6,7 @@ import babelify from 'babelify';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
 import connect from 'gulp-connect';
+import concat from 'gulp-concat';
 import sass from 'gulp-sass';
 import del from 'del';
 
@@ -50,8 +51,9 @@ gulp.task('scripts', () => (
 ));
 
 gulp.task('sass', () => (
-  gulp.src('src/**/*.scss')
+  gulp.src('src/sass/**/*.scss')
     .pipe(sass().on('error', sass.logError))
+    .pipe(concat('styles.css'))
     .pipe(gulp.dest(dirs.tmp))
     .pipe(connect.reload())
 ));
