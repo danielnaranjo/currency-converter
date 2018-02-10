@@ -7,9 +7,10 @@ Make sure you have [npm](https://www.npmjs.com/) and Gulp.js (`npm i gulp-cli -g
 npm install
 npm start
 ```
-This should start a new server on `http://localhost:8080/`
+This should start a new server on `http://localhost:8080/`.
 
 ## Build
 ```
 npm run build
 ```
+Built files are located in `./dist`.
