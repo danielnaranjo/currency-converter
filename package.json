@@ -1,0 +1,41 @@
+{
+  "name": "cs317-currency-converter",
+  "version": "1.0.0",
+  "description": "Individual Assignment 1 - CS317 Mobile Applications Development",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "gulp",
+    "build": "gulp build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mandriv/cs317-currency-converter.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mandriv/cs317-currency-converter/issues"
+  },
+  "homepage": "https://github.com/mandriv/cs317-currency-converter#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "babelify": "^8.0.0",
+    "browserify": "^16.0.0",
+    "del": "^3.0.0",
+    "eslint": "^4.17.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-connect": "^5.2.0",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.4",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0",
+    "watchify": "^3.10.0"
+  }
+}
