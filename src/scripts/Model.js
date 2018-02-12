@@ -175,9 +175,8 @@ export default class Model {
 
   fetchAndParseData = async () => {
     try {
-      const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
       const targetUrl = 'https://devweb2017.cis.strath.ac.uk/~aes02112/ecbxml.php';
-      const response = await fetch(`${proxyUrl}${targetUrl}`);
+      const response = await fetch(targetUrl);
       if (!response.ok) {
         throw new Error(response);
       }
