@@ -174,37 +174,30 @@ export default class Model {
   }
 
   fetchAndParseData = async () => {
-    try {
-      const targetUrl = 'https://devweb2017.cis.strath.ac.uk/~aes02112/ecbxml.php';
-      const response = await fetch(targetUrl);
-      if (!response.ok) {
-        throw new Error(response);
-      }
-
-      // Parse response
-      const data = await response.text();
-      const parser = new DOMParser();
-      const xml = parser.parseFromString(data, 'application/xml');
-      const nodes = xml.getElementsByTagName('Cube');
-      for (const node of nodes) {
-        const symbol = node.getAttribute('currency');
-        const rate = Number.parseFloat(node.getAttribute('rate'));
-        if (symbol && rate) {
-          this.currencies.push({ symbol, rate });
-        }
-      }
-      // add euros as well
-      this.currencies.unshift({
-        symbol: 'EUR',
-        rate: 1.0,
-      });
-      this.loading = false;
-      return response;
-    } catch (error) {
-      this.loading = false;
-      console.error(error);
-      return false;
+    const targetUrl = 'https://devweb2017.cis.strath.ac.uk/~aes02112/ecbxml.php';
+    const response = await fetch(targetUrl);
+    if (!response.ok) {
+      throw new Error(response);
     }
+
+    // Parse response
+    const data = await response.text();
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(data, 'application/xml');
+    const nodes = xml.getElementsByTagName('Cube');
+    for (const node of nodes) {
+      const symbol = node.getAttribute('currency');
+      const rate = Number.parseFloat(node.getAttribute('rate'));
+      if (symbol && rate) {
+        this.currencies.push({ symbol, rate });
+      }
+    }
+    // add euros as well
+    this.currencies.unshift({
+      symbol: 'EUR',
+      rate: 1.0,
+    });
+    this.loading = false;
   }
 
   setConnection = (connection = true) => {
