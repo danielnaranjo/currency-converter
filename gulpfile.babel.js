@@ -83,20 +83,6 @@ gulp.task('sass', () => (
     .pipe(connect.reload())
 ));
 
-gulp.task('critical', () => {
-  critical.generate({
-    inline: true,
-    base: 'dist/',
-    src: 'index.html',
-    dest: 'dist/index.html',
-    css: ['dist/styles.css'],
-    width: 1300,
-    height: 900,
-    minify: true,
-    extract: true,
-  });
-});
-
 gulp.task('watch', () => {
   gulp.watch(['src/**/*.html'], ['html']);
   gulp.watch(['src/**/*.js'], ['scripts']);
@@ -108,7 +94,7 @@ gulp.task('watch', () => {
 
 // 1. rm -rf ./dist
 gulp.task('clean:build', () => (
-  del(`${dirs.dist}/**/*.*`)
+  del([`${dirs.dist}/**`, `!${dirs.dist}`])
 ));
 
 // 2. minify html
@@ -170,9 +156,34 @@ gulp.task('sass:build', () => (
     }))
     .pipe(csso({ sourceMap: false }))
     .on('error', err => console.error(err))
-    .pipe(gulp.dest(dirs.tmp))
+    .pipe(gulp.dest(dirs.dist))
     .pipe(connect.reload())
 ));
+
+// 7. Inline critial styles
+gulp.task('critical', () => {
+  critical.generate({
+    inline: true,
+    base: 'dist/',
+    src: 'index.html',
+    dest: 'dist/index.html',
+    css: ['dist/styles.css'],
+    width: 1300,
+    height: 900,
+    minify: true,
+    extract: true,
+  });
+});
+
+gulp.task('test-build', () => {
+  connect.server({
+    root: dirs.dist,
+    livereload: false,
+    port: 3000,
+  }).on('error', err => console.error(err));
+
+  connect.reload();
+});
 
 // The good stuff
 gulp.task('serve', ['clean', 'html', 'scripts', 'worker', 'assets', 'sass', 'connect', 'watch']);
