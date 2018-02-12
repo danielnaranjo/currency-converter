@@ -22,13 +22,14 @@ const dirs = {
 
 // Deleted
 gulp.task('clean', () => (
-  del(dirs.tmp)
+  del(`${dirs.tmp}/**/*.*`)
 ));
 
 gulp.task('connect', () => {
   connect.server({
     root: dirs.tmp,
     livereload: true,
+    port: 3000,
   });
   connect.reload();
 });
