@@ -69,8 +69,8 @@ gulp.task('worker', () => {
 });
 
 gulp.task('assets', () => {
-  gulp.src('src/sass/fontawesome/webfonts/*.*', { base: './src/sass/fontawesome' })
-    .pipe(gulp.dest(dirs.tmp));
+  gulp.src('./assets/*.*', { base: './' })
+    .pipe(gulp.dest(dirs.dist));
   gulp.src('src/sass/flag-icon/flags/**/*.*', { base: './src/sass/flag-icon' })
     .pipe(gulp.dest(dirs.tmp));
 });
@@ -137,8 +137,6 @@ gulp.task('worker:build', () => {
 
 // 5. copy assets
 gulp.task('assets:build', () => {
-  gulp.src('src/sass/fontawesome/webfonts/*.*', { base: './src/sass/fontawesome' })
-    .pipe(gulp.dest(dirs.dist));
   gulp.src('src/sass/flag-icon/flags/**/*.*', { base: './src/sass/flag-icon' })
     .pipe(gulp.dest(dirs.dist));
   gulp.src('./assets/*.*', { base: './' })
