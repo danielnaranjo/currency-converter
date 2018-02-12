@@ -6,11 +6,64 @@
     <link rel="stylesheet" href="styles.css">
     <!-- External styles -->
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
   </head>
   <body>
-    <div id="sidebar">
-      <i class="far fa-times-circle fa-2x" id="sidebar-close"></i>
+    <!-- Modals -->
+    <div id="country-modal" class="modal hidden">
+      <div class="title" id="country-modal-title"></div>
+      <ul id="country-list" class="content"></ul>
+      <div class="bottom" id="country-modal-close">
+        <button>Close</button>
+      </div>
     </div>
+
+    <div id="bank-modal" class="modal hidden">
+      <div class="title" id="bank-modal-title"></div>
+      <div class="content grid">
+        <div class="arrow up item" id="increment-first-btn"><i class="fas fa-angle-up"></i></div>
+        <div class="item"></div>
+        <div class="arrow up item" id="increment-second-btn"><i class="fas fa-angle-up"></i></div>
+        <div class="arrow up item" id="increment-third-btn"><i class="fas fa-angle-up"></i></div>
+        <div class="item"></div>
+
+        <div class="center number item" id="bank-fee-first-digit"></div>
+        <div class="center number item">.</div>
+        <div class="center number item" id="bank-fee-second-digit"></div>
+        <div class="center number item" id="bank-fee-third-digit"></div>
+        <div class="center number item">%</div>
+
+        <div class="arrow down item" id="decrement-first-btn"><i class="fas fa-angle-down"></i></div>
+        <div class="item"></div>
+        <div class="arrow down item" id="decrement-second-btn"><i class="fas fa-angle-down"></i></div>
+        <div class="arrow down item" id="decrement-third-btn"><i class="fas fa-angle-down"></i></div>
+        <div class="item"></div>
+      </div>
+      <div class="bottom" id="bank-modal-close">
+        <button>Save</button>
+      </div>
+    </div>
+    <!-- Sidebar -->
+    <div id="sidebar">
+      <div class="close">
+        <i class="far fa-times-circle" id="sidebar-close"></i>
+      </div>
+      <div class="state">
+        <span id="base-currency-sidebar">EUR</span>
+        <i class="fas fa-exchange-alt" id="exchange-sign-sidebar"></i>
+        <span id="target-currency-sidebar">GBP</span>
+      </div>
+      <div class="item" id="change-source">
+        Change source currency
+      </div>
+      <div class="item" id="change-target">
+        Change target currency
+      </div>
+      <div class="item" id="change-bank-fee">
+        Set bank fee
+      </div>
+    </div>
+    <!-- Main content -->
     <div id="app">
       <nav class="navbar">
         <i class="fas fa-bars fa-3x" id="menu-handle"></i>

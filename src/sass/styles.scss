@@ -1,5 +1,9 @@
 $light-grey: #d3d3d3;
-$frosted-glass: #ecf0f1;
+$light-shadow: rgba(0, 0, 0, 0.1);
+$dark-denim: #34495e;
+$snap-shot: #2c3e50;
+$blue: #3498db;
+$white-smoke: #F5F5F5;
 body {
   font-family: 'Lato', sans-serif;
   overflow: hidden;
@@ -7,6 +11,7 @@ body {
 
 #app {
   height: 100vh;
+  background-color: $snap-shot;
 }
 
 #sidebar {
@@ -16,9 +21,62 @@ body {
   position: absolute;
   top: 0;
   bottom: 0;
-  background: $frosted-glass;
+  background: $dark-denim;
   z-index: 100;
+  white-space: nowrap;
   transition: width 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  border-right: 2px solid $light-grey;
+  border-top-right-radius: 5rem;
+
+  .close {
+    justify-content: flex-end;
+    margin: 0;
+    color: $light-grey;
+    &:active {
+      color: $white-smoke;
+    }
+  }
+
+  .state {
+    justify-content: center;
+    margin-bottom: 3rem;
+    i {
+      margin-left: 0.5em;
+      margin-right: 0.5em;
+      color: $blue;
+    }
+    span {
+      color: $white-smoke;
+    }
+  }
+
+  div {
+    width: calc(100% - 5rem);
+    height: 8rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 4rem;
+    padding: 1rem 2.5rem 1rem 2.5rem;
+  }
+
+  .item {
+    color: $light-grey;
+    font-size: 3rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+    transition: all 100ms ease;
+
+    &:last-child {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    &:active {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: $white-smoke;
+    }
+  }
 }
 
 .navbar {
@@ -32,27 +90,32 @@ body {
   header {
     font-size: 3.5em;
     text-align: center;
+    font-family: 'Pacifico', cursive;
+    color: $white-smoke;
+    text-shadow: 0px 0px 20px $blue;
   }
   i {
-    color: #000;
+    color: $light-grey;
     transition: color 100ms ease;
     &:active {
-      color: $light-grey;
+      color: $white-smoke;
     }
   }
 }
 
 .display {
-  height: 9rem;
+  height: 10rem;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
   padding: 0em 3em 0em 3em;
   border-bottom: 1px solid $light-grey;
+  overflow: scroll;
 
   .value {
     font-size: 4em;
+    color: $white-smoke;
   }
   .currency {
     margin-left: 0.25em;
@@ -60,7 +123,7 @@ body {
     color: $light-grey;
   }
   i {
-    color: #000;
+    color: $blue;
     transition: color 100ms ease;
     &:active {
       color: $light-grey;
@@ -69,7 +132,7 @@ body {
 }
 
 .keyboard {
-  height: calc(100vh - 18rem);
+  height: calc(100vh - 19rem);
   display: grid;
   grid-template-columns: auto auto auto;
   grid-template-rows: auto auto auto auto;
@@ -82,18 +145,145 @@ body {
     font-size: 5em;
     color: #000;
     border: 1px solid $light-grey;
-    transition: color 100ms ease;
+    transition: all 100ms ease;
+    color: $light-grey;
+    user-select: none;
     &:active {
-      color: $light-grey;
+      color: $white-smoke;
+      border: 1px solid $white-smoke;
+      background-color: lighten($snap-shot, 5%);
+      text-shadow: 0px 0px 20px $blue;
     }
   }
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .relaxed {
   padding-left: 1em;
   padding-right: 1em;
+}
+
+.cloak {
+  opacity: 0.0;
+}
+
+.modal {
+  overflow: hidden;
+  position: absolute;
+  top: 2.5vh;
+  left: 2.5vw;
+  z-index: 101;
+  width: 95vw;
+  height: 95vh;
+  background-color: $dark-denim;
+  border-radius: 3rem;
+  border: 1px solid $light-grey;
+  box-shadow: 5px 5px 5px $light-shadow;
+  transition: all 100ms ease;
+  .title {
+    font-size: 4rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 0 2rem 0;
+    border-bottom: 1px solid $light-grey;
+    color: $white-smoke;
+  }
+  .content {
+    height: calc(95vh - 20rem);
+    overflow: scroll;
+  }
+  ul {
+    list-style-type: none;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    li {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 3rem;
+      padding: 2rem 0 2rem 0;
+      border-bottom: 1px solid $light-grey;
+      &:active {
+        color: $light-grey;
+        text-shadow: 0px 0px 20px $blue;
+      }
+      .flag-icon {
+        flex: 1;
+      }
+      .currency {
+        flex: 1;
+        color: $light-grey;
+        margin-left: 1rem;
+        margin-right: 2rem;
+        width: 5rem;
+      }
+      .name {
+        flex: 4;
+        color: $white-smoke;
+      }
+      i {
+        flex: 1;
+        align-self: flex-end;
+        color: $white-smoke;
+      }
+    }
+  }
+  .grid {
+    overflow: auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(3, 15rem);
+    margin: 0rem 10rem;
+    .item {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    }
+    .number {
+      font-size: 10em;
+      color: $white-smoke;
+      border-top: 1px solid $light-grey;
+      border-bottom: 1px solid $light-grey;
+    }
+    .center {
+      align-items: center;
+    }
+    .arrow {
+      font-size: 8em;
+      color: $light-grey;
+      &:active {
+        color: $white-smoke;
+        text-shadow: 0px 0px 20px $blue;
+      }
+    }
+    .up {
+      align-items: flex-end;
+    }
+    .down {
+      align-items: flex-start;
+    }
+  }
+  .bottom {
+    height: 10rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid $light-grey;
+    transition: all 100ms ease;
+
+    button {
+      font-size: 3.5rem;
+      color: $white-smoke;
+    }
+
+    &:active {
+      background-color: $light-grey;
+    }
+  }
 }

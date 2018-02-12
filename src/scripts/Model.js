@@ -8,11 +8,19 @@ export default class Model {
 
   input = '0';
   inputMode = true;
-  output = '';
+  output = '0';
 
   baseCurrency = '';
   targetCurrency = '';
   currencies = [];
+
+  modalComparator = '';
+  modalTitle = '';
+
+  fee = {
+    value: 0.00,
+    digits: [0, 0, 0],
+  }
 
   toggleSidebar = () => {
     this.sidebarVisible = !this.sidebarVisible;
@@ -47,12 +55,54 @@ export default class Model {
     this.output = output;
   }
 
+  clearOutput = () => {
+    this.output = '0';
+  }
+
   switchToInputMode = () => {
     this.inputMode = true;
   }
 
   switchOffInputMode = () => {
     this.inputMode = false;
+  }
+
+  incrementFeeDigit = (digit) => {
+    if (![1, 2, 3].some(num => digit === num)) {
+      throw new Error('Invalid argument! Digit has to be one of: 1, 2, 3');
+    }
+    const { digits } = this.fee;
+    if (digits[digit - 1] === 9) {
+      digits[digit - 1] = 0;
+    } else {
+      digits[digit - 1] = digits[digit - 1] + 1;
+    }
+    this.fee.value = Number(`${digits[0]}.${digits[1]}${digits[2]}`);
+    this.fee.digits = digits;
+  }
+
+  decrementFeeDigit = (digit) => {
+    if (![1, 2, 3].some(num => digit === num)) {
+      throw new Error('Invalid argument! Digit has to be one of: 1, 2, 3');
+    }
+    const { digits } = this.fee;
+    if (digits[digit - 1] === 0) {
+      digits[digit - 1] = 9;
+    } else {
+      digits[digit - 1] = digits[digit - 1] - 1;
+    }
+    this.fee.value = Number(`${digits[0]}.${digits[1]}${digits[2]}`);
+    this.fee.digits = digits;
+  }
+
+  switchTarget = () => {
+    const { model } = this;
+    model.setInput(model.output);
+    const base = model.baseCurrency;
+    const target = model.targetCurrency;
+    this.setBaseCurrency(target);
+    this.setTargetCurrency(base);
+    this.transformCurrencies();
   }
 
   eval = () => {
@@ -69,7 +119,11 @@ export default class Model {
     if (!rate) throw new Error('Could not find target currency');
 
     const base = Number(this.input);
-    const result = ((base * 10000) * (rate * 10000)) / 100000000;
+    // Normal ratio + fee
+    let result = ((base * 10000) * (rate * 10000)) / 100000000;
+    // Fee multiplier
+    const multiplier = (100 + this.fee.value) / 100;
+    result = ((result * 10000) * (multiplier * 10000)) / 100000000;
     const precision = symbol === 'JPY' ? 0 : 2;
     this.input = precisionRound(base, precision).toFixed(precision);
     this.output = precisionRound(result, precision).toFixed(precision);
@@ -141,7 +195,7 @@ export default class Model {
         }
       }
       // add euros as well
-      this.currencies.push({
+      this.currencies.unshift({
         symbol: 'EUR',
         rate: 1.0,
       });
@@ -157,16 +211,6 @@ export default class Model {
   setConnection = (connection = true) => {
     if (connection !== true && connection !== false) throw new Error('Invalid argument!');
     this.network = connection;
-  }
-
-  updateStorage = () => {
-    if ('localStorage' in window) {
-      console.log('updating');
-      const { localStorage } = window;
-      localStorage.currencies = JSON.stringify(this.currencies);
-      localStorage.baseCurrency = this.baseCurrency;
-      localStorage.targetCurrency = this.targetCurrency;
-    }
   }
 
 }

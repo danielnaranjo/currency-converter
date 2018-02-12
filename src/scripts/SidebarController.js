@@ -17,6 +17,7 @@ export default class SidebarController {
   showSidebar = () => {
     const { sidebar, app } = this.view;
     sidebar.style.width = '75%';
+    this.model.sidebarVisible = true;
     setTimeout(() => {
       app.addEventListener('click', this.toggleSidebar);
     }, 50);
@@ -25,6 +26,7 @@ export default class SidebarController {
   closeSidebar = () => {
     const { sidebar, app } = this.view;
     sidebar.style.width = '0';
+    this.model.sidebarVisible = false;
     app.removeEventListener('click', this.toggleSidebar);
   }
 
