@@ -50,6 +50,12 @@ gulp.task('scripts', () => (
     .pipe(connect.reload())
 ));
 
+
+gulp.task('fa-assets', () => (
+  gulp.src('src/sass/fontawesome/webfonts/*.*', { base: './src/sass/fontawesome' })
+    .pipe(gulp.dest(dirs.tmp))
+));
+
 gulp.task('sass', () => (
   gulp.src('src/sass/**/*.scss')
     .pipe(sass().on('error', sass.logError))
