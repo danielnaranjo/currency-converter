@@ -50,6 +50,18 @@ gulp.task('scripts', () => (
     .pipe(connect.reload())
 ));
 
+gulp.task('worker', () => (
+  gulp.src('src/scripts/util/worker.js')
+    .pipe(babel())
+    .pipe(gulp.dest(dirs.tmp))
+    .pipe(connect.reload())
+));
+
+gulp.task('cache-polyfill', () => (
+  gulp.src('src/scripts/util/cache-polyfill.js')
+    .pipe(gulp.dest(dirs.tmp))
+    .pipe(connect.reload())
+));
 
 gulp.task('fa-assets', () => (
   gulp.src('src/sass/fontawesome/webfonts/*.*', { base: './src/sass/fontawesome' })
@@ -67,9 +79,11 @@ gulp.task('sass', () => (
 gulp.task('watch', () => {
   gulp.watch(['src/**/*.html'], ['html']);
   gulp.watch(['src/**/*.js'], ['scripts']);
+  gulp.watch(['src/scripts/util/worker.js'], ['worker']);
+  gulp.watch(['src/scripts/util/cache-polyfill.js'], ['cache-polyfill']);
   gulp.watch(['src/**/*.scss'], ['sass']);
 });
 
 // The good stuff
-gulp.task('serve', ['clean', 'html', 'scripts', 'sass', 'connect', 'watch']);
+gulp.task('serve', ['clean', 'html', 'scripts', 'cache-polyfill', 'worker', 'fa-assets', 'sass', 'connect', 'watch']);
 gulp.task('default', ['serve']);
