@@ -27,4 +27,5 @@ export default class SidebarController {
     sidebar.style.width = '0';
     app.removeEventListener('click', this.toggleSidebar);
   }
+
 }

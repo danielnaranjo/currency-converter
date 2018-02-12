@@ -1,4 +1,4 @@
-import { precisionRound } from './util';
+import { precisionRound, staticRates } from './util';
 
 export default class Model {
 
@@ -108,13 +108,13 @@ export default class Model {
   }
 
   setBaseCurrency = (currencySymbol = '') => {
-    const finding = this.currencies.find(currency => currency.symbol === currencySymbol);
+    const finding = staticRates.find(currency => currency.symbol === currencySymbol);
     if (!finding) throw new Error('Invalid currency symbol!');
     this.baseCurrency = currencySymbol;
   }
 
   setTargetCurrency = (currencySymbol = '') => {
-    const finding = this.currencies.find(currency => currency.symbol === currencySymbol);
+    const finding = staticRates.find(currency => currency.symbol === currencySymbol);
     if (!finding) throw new Error('Invalid currency symbol!');
     this.targetCurrency = currencySymbol;
   }
@@ -161,7 +161,11 @@ export default class Model {
 
   updateStorage = () => {
     if ('localStorage' in window) {
-      window.localStorage.currencies = JSON.stringify(this.currencies);
+      console.log('updating');
+      const { localStorage } = window;
+      localStorage.currencies = JSON.stringify(this.currencies);
+      localStorage.baseCurrency = this.baseCurrency;
+      localStorage.targetCurrency = this.targetCurrency;
     }
   }
 

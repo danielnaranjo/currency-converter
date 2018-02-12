@@ -13,13 +13,37 @@ export default class Controller {
     this.model = new Model();
   }
 
-  fetchData = async () => {
+  refreshData = async () => {
+    // fetch data
     const { view, model } = this;
     const fetchStart = new Event('fetch-start');
     const fetchEnd = new Event('fetch-end');
     view.spinner.dispatchEvent(fetchStart);
-    await model.fetchAndParseData();
-    view.spinner.dispatchEvent(fetchEnd);
+    try {
+      await model.fetchAndParseData();
+      view.spinner.dispatchEvent(fetchEnd);
+    } catch (err) {
+      view.spinner.dispatchEvent(fetchEnd);
+      model.setConnection(false);
+      if ('localStorage' in window) {
+        let { rates } = window.localStorage;
+        try {
+          rates = JSON.parse(rates);
+          if (Array.isArray(rates) && rates.length > 0) {
+            model.setCurrencies(rates);
+          } else {
+            model.setCurrencies(util.staticRates);
+          }
+        } catch (error) {
+          model.setCurrencies(util.staticRates);
+        }
+      } else {
+        model.setCurrencies(util.staticRates);
+      }
+    }
+    model.transformCurrencies();
+    model.updateStorage();
+    this.update();
   }
 
   update = () => {
@@ -76,6 +100,7 @@ export default class Controller {
     model.setBaseCurrency(target);
     model.setTargetCurrency(base);
     model.transformCurrencies();
+    model.updateStorage();
     this.eval();
   }
 
@@ -92,7 +117,7 @@ export default class Controller {
       util.removeClass(view.spinner, 'fa-spin');
     });
     view.spinner.addEventListener('click', () => {
-      this.fetchData();
+      this.refreshData();
     });
     view.exchangeSign.addEventListener('click', () => {
       this.switchTarget();
@@ -115,33 +140,17 @@ export default class Controller {
       });
     }
 
-    // fetch data
-    try {
-      await this.fetchData();
-    } catch (err) {
-      model.setConnection(false);
-      if ('localStorage' in window) {
-        let { rates } = window.localStorage;
-        try {
-          rates = JSON.parse(rates);
-          if (Array.isArray(rates) && rates.length > 0) {
-            model.setCurrencies(rates);
-          } else {
-            model.setCurrencies(util.staticRates);
-          }
-        } catch (error) {
-          model.setCurrencies(util.staticRates);
-        }
-      } else {
-        model.setCurrencies(util.staticRates);
-      }
+    // State initialization
+    if ('localStorage' in window) {
+      const { localStorage } = window;
+      const { baseCurrency, targetCurrency } = localStorage;
+      model.setBaseCurrency(baseCurrency || 'EUR');
+      model.setTargetCurrency(targetCurrency || 'GBP');
+    } else {
+      model.setBaseCurrency('EUR');
+      model.setTargetCurrency('GBP');
     }
-
-    model.setBaseCurrency('EUR');
-    model.setTargetCurrency('GBP');
-    model.transformCurrencies();
-    model.updateStorage();
-    this.update();
+    await this.refreshData();
   };
 
 }
