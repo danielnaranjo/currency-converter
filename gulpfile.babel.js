@@ -158,7 +158,8 @@ gulp.task('sass:build', () => (
     .pipe(connect.reload())
 ));
 
-// 7. Inline critial styles
+// 7. Inline critial styles - it's crashing
+// TODO: investigate
 gulp.task('critical', () => {
   critical.generate({
     inline: true,
@@ -178,12 +179,10 @@ gulp.task('test-build', () => {
     root: dirs.dist,
     livereload: false,
     port: 3000,
-  }).on('error', err => console.error(err));
-
-  connect.reload();
+  });
 });
 
 // The good stuff
 gulp.task('serve', ['clean', 'html', 'scripts', 'worker', 'assets', 'sass', 'connect', 'watch']);
-gulp.task('build', ['clean:build', 'html:build', 'scripts:build', 'worker:build', 'assets:build', 'sass:build', 'critical']);
+gulp.task('build', ['clean:build', 'html:build', 'scripts:build', 'worker:build', 'assets:build', 'sass:build', 'test-build']);
 gulp.task('default', ['serve']);
