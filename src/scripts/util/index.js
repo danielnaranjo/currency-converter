@@ -21,6 +21,14 @@ export const hasClass = (element, className) => {
   return new RegExp('(^| )' + className + '( |$)', 'gi').test(element.className); // eslint-disable-line
 };
 
+export const addLink = (url) => {
+  const link = document.createElement('link');
+  link.src = url;
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  document.getElementsByTagName('head')[0].appendChild(link);
+};
+
 export const precisionRound = (number, precision = 2) => {
   if (!number) throw new Error('Missing number argument!');
   const factor = 10 ** precision;

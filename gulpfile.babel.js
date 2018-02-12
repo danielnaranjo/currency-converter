@@ -25,7 +25,7 @@ const bundlerCfg = {
 const buildBundlerCfg = {
   entries: 'src/index.js',
   debug: false,
-}
+};
 const bundler = watchify(browserify(bundlerCfg).transform(babelify));
 const buildBundler = watchify(browserify(buildBundlerCfg).transform(babelify));
 const dirs = {
@@ -72,7 +72,6 @@ gulp.task('scripts', ['clean:scripts'], () => (
 
 gulp.task('worker', ['clean:worker'], () => {
   gulp.src('src/scripts/util/worker.js')
-    .pipe(babel())
     .pipe(gulp.dest(dirs.tmp))
     .pipe(connect.reload());
   gulp.src('src/scripts/util/cache-polyfill.js')
@@ -83,8 +82,6 @@ gulp.task('worker', ['clean:worker'], () => {
 gulp.task('assets', ['clean'], () => {
   gulp.src('./assets/*.*', { base: './' })
     .pipe(gulp.dest(dirs.dist));
-  gulp.src('src/sass/flag-icon/flags/**/*.*', { base: './src/sass/flag-icon' })
-    .pipe(gulp.dest(dirs.tmp));
 });
 
 gulp.task('sass', ['clean:css'], () => (

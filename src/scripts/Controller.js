@@ -319,6 +319,11 @@ export default class Controller {
     // Fetch data
     await this.refreshData();
     this.update();
+
+    // add missing flags cdns
+    util.currencies.forEach((currency) => {
+      util.addLink(`https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/2.9.0/flags/4x3/${currency.code}.svg`);
+    });
   };
 
 }
