@@ -1,5 +1,6 @@
 module.exports = {
     "extends": "airbnb-base",
+    "parser": "babel-eslint",
     "rules": {
       "padded-blocks": ["error", {
         "classes": "always",
@@ -7,6 +8,7 @@ module.exports = {
         "blocks": "never",
        }],
       "object-curly-newline": ["error", { "multiline": true }],
+      "no-restricted-syntax": 0,
       "import/no-extraneous-dependencies": [
         "error",
         {
@@ -15,5 +17,9 @@ module.exports = {
           "peerDependencies": false,
         }
       ],
+      "no-console": ["error", { allow: ["warn", "error"] }],
     },
+    env: {
+      "browser": true,
+    }
 };
