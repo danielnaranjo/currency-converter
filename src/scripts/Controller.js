@@ -22,17 +22,23 @@ export default class Controller {
     view.spinner.dispatchEvent(fetchEnd);
   }
 
+  update = () => {
+    const { view, model } = this;
+    // I/O
+    view.inputDisplay.textContent = model.input;
+    view.outputDisplay.textContent = model.output;
+    // Currency labels
+    view.baseCurrencyDisplay.textContent = model.baseCurrency;
+    view.targetCurrencyDisplay.textContent = model.targetCurrency;
+  }
+
   appendInput = (input) => {
     const { view, model } = this;
     if (!model.inputMode) this.cancel();
     if (model.loading) return;
     model.appendInput(input);
     view.inputDisplay.textContent = model.input;
-  }
-
-  updateBaseCurrency = () => {
-    const { view, model } = this;
-    view.baseCurrencyDisplay.textContent = model.baseCurrency;
+    this.update();
   }
 
   cancel = () => {
@@ -45,6 +51,7 @@ export default class Controller {
     util.addClass(view.outputDisplay, 'hidden');
     util.addClass(view.exchangeSign, 'hidden');
     util.addClass(view.targetCurrencyDisplay, 'hidden');
+    this.update();
   }
 
   eval = () => {
@@ -54,12 +61,22 @@ export default class Controller {
       model.eval();
       model.switchOffInputMode();
       view.display.style.justifyContent = 'center';
-      view.outputDisplay.textContent = model.output;
-      view.targetCurrencyDisplay.textContent = model.targetCurrency;
       util.removeClass(view.outputDisplay, 'hidden');
       util.removeClass(view.exchangeSign, 'hidden');
       util.removeClass(view.targetCurrencyDisplay, 'hidden');
+      this.update();
     }
+  }
+
+  switchTarget = () => {
+    const { model } = this;
+    model.setInput(model.output);
+    const base = model.baseCurrency;
+    const target = model.targetCurrency;
+    model.setBaseCurrency(target);
+    model.setTargetCurrency(base);
+    model.transformCurrencies();
+    this.eval();
   }
 
   init = async () => {
@@ -76,6 +93,9 @@ export default class Controller {
     });
     view.spinner.addEventListener('click', () => {
       this.fetchData();
+    });
+    view.exchangeSign.addEventListener('click', () => {
+      this.switchTarget();
     });
     for (const button of view.keyboard) {
       button.addEventListener('click', () => {
@@ -121,6 +141,7 @@ export default class Controller {
     model.setTargetCurrency('GBP');
     model.transformCurrencies();
     model.updateStorage();
+    this.update();
   };
 
 }

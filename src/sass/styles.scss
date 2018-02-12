@@ -59,6 +59,13 @@ body {
     font-size: 4em;
     color: $light-grey;
   }
+  i {
+    color: #000;
+    transition: color 100ms ease;
+    &:active {
+      color: $light-grey;
+    }
+  }
 }
 
 .keyboard {
