@@ -96,11 +96,31 @@ export default class Controller {
     }
 
     // fetch data
-    await this.fetchData();
+    try {
+      await this.fetchData();
+    } catch (err) {
+      model.setConnection(false);
+      if ('localStorage' in window) {
+        let { rates } = window.localStorage;
+        try {
+          rates = JSON.parse(rates);
+          if (Array.isArray(rates) && rates.length > 0) {
+            model.setCurrencies(rates);
+          } else {
+            model.setCurrencies(util.staticRates);
+          }
+        } catch (error) {
+          model.setCurrencies(util.staticRates);
+        }
+      } else {
+        model.setCurrencies(util.staticRates);
+      }
+    }
+
     model.setBaseCurrency('EUR');
     model.setTargetCurrency('GBP');
     model.transformCurrencies();
-    this.updateBaseCurrency();
+    model.updateStorage();
   };
 
 }

@@ -4,13 +4,14 @@ export default class Model {
 
   sidebarVisible = false;
   loading = true;
+  network = true;
 
   input = '0';
   inputMode = true;
   output = '';
 
-  baseCurrency = 'EUR';
-  targetCurrency = 'EUR';
+  baseCurrency = '';
+  targetCurrency = '';
   currencies = [];
 
   toggleSidebar = () => {
@@ -71,7 +72,7 @@ export default class Model {
     }
     if (!rate) throw new Error('Invalid currency param!');
     // Next update all rates
-    this.currencies = this.currencies.map((currency) => {
+    const newCurrencies = this.currencies.map((currency) => {
       if (currency.symbol === baseCurrency) {
         return {
           ...currency,
@@ -84,7 +85,13 @@ export default class Model {
         rate: val,
       };
     });
+    this.setCurrencies(newCurrencies);
   };
+
+  setCurrencies = (currencies = []) => {
+    if (!Array.isArray(currencies) || currencies.length === 0) throw new Error('Invalid argument!');
+    this.currencies = currencies;
+  }
 
   setBaseCurrency = (currencySymbol = '') => {
     const finding = this.currencies.find(currency => currency.symbol === currencySymbol);
@@ -130,6 +137,17 @@ export default class Model {
       this.loading = false;
       console.error(error);
       return false;
+    }
+  }
+
+  setConnection = (connection = true) => {
+    if (connection !== true && connection !== false) throw new Error('Invalid argument!');
+    this.network = connection;
+  }
+
+  updateStorage = () => {
+    if ('localStorage' in window) {
+      window.localStorage.currencies = JSON.stringify(this.currencies);
     }
   }
 
