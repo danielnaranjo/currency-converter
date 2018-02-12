@@ -22,32 +22,44 @@ const bundlerCfg = {
   entries: 'src/index.js',
   debug: true,
 };
+const buildBundlerCfg = {
+  entries: 'src/index.js',
+  debug: false,
+}
 const bundler = watchify(browserify(bundlerCfg).transform(babelify));
+const buildBundler = watchify(browserify(buildBundlerCfg).transform(babelify));
 const dirs = {
   tmp: 'tmp',
   dist: 'dist',
 };
 
 gulp.task('clean', () => (
-  del(`${dirs.tmp}/**/*.*`)
+  del([`${dirs.tmp}/**`, `!${dirs.tmp}`])
 ));
 
-gulp.task('connect', () => {
-  connect.server({
-    root: dirs.tmp,
-    livereload: true,
-    port: 3000,
-  });
-  connect.reload();
-});
+gulp.task('clean:html', () => (
+  del([`${dirs.tmp}/**/*.html`, `!${dirs.tmp}`])
+));
 
-gulp.task('html', () => (
+gulp.task('clean:scripts', () => (
+  del([`${dirs.tmp}/scripts.js`])
+));
+
+gulp.task('clean:worker', () => (
+  del([`${dirs.tmp}/cache-polyfill.js`, `${dirs.tmp}/worker.js`])
+));
+
+gulp.task('clean:css', () => (
+  del([`${dirs.tmp}/**/*.css`, `!${dirs.tmp}`])
+));
+
+gulp.task('html', ['clean:html'], () => (
   gulp.src('./src/**/*.html')
     .pipe(gulp.dest(dirs.tmp))
     .pipe(connect.reload())
 ));
 
-gulp.task('scripts', () => (
+gulp.task('scripts', ['clean:scripts'], () => (
   bundler
     .bundle()
     .pipe(source('scripts.js'))
@@ -58,7 +70,7 @@ gulp.task('scripts', () => (
     .pipe(connect.reload())
 ));
 
-gulp.task('worker', () => {
+gulp.task('worker', ['clean:worker'], () => {
   gulp.src('src/scripts/util/worker.js')
     .pipe(babel())
     .pipe(gulp.dest(dirs.tmp))
@@ -68,14 +80,14 @@ gulp.task('worker', () => {
     .pipe(connect.reload());
 });
 
-gulp.task('assets', () => {
+gulp.task('assets', ['clean'], () => {
   gulp.src('./assets/*.*', { base: './' })
     .pipe(gulp.dest(dirs.dist));
   gulp.src('src/sass/flag-icon/flags/**/*.*', { base: './src/sass/flag-icon' })
     .pipe(gulp.dest(dirs.tmp));
 });
 
-gulp.task('sass', () => (
+gulp.task('sass', ['clean:css'], () => (
   gulp.src('src/sass/**/*.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(concat('styles.css'))
@@ -83,11 +95,19 @@ gulp.task('sass', () => (
     .pipe(connect.reload())
 ));
 
-gulp.task('watch', () => {
+gulp.task('watch', ['clean', 'html', 'scripts', 'worker', 'assets', 'sass', 'connect'], () => {
   gulp.watch(['src/**/*.html'], ['html']);
   gulp.watch(['src/**/*.js'], ['scripts']);
   gulp.watch(['src/scripts/util/worker.js', 'src/scripts/util/cache-polyfill.js'], ['worker']);
   gulp.watch(['src/**/*.scss'], ['sass']);
+});
+
+gulp.task('connect', () => {
+  connect.server({
+    root: dirs.tmp,
+    livereload: true,
+    port: 3000,
+  });
 });
 
 // Build task - gulp build
@@ -98,7 +118,7 @@ gulp.task('clean:build', () => (
 ));
 
 // 2. minify html
-gulp.task('html:build', () => (
+gulp.task('html:build', ['clean:build'], () => (
   gulp.src('./src/**/*.html')
     .pipe(htmlmin({
       collapseWhitespace: true,
@@ -113,8 +133,8 @@ gulp.task('html:build', () => (
 ));
 
 // 3. bundle and uglify js
-gulp.task('scripts:build', () => (
-  bundler
+gulp.task('scripts:build', ['clean:build'], () => (
+  buildBundler
     .bundle()
     .pipe(source('scripts.js'))
     .pipe(buffer())
@@ -124,7 +144,7 @@ gulp.task('scripts:build', () => (
 ));
 
 // 4. copy and transpile worker files
-gulp.task('worker:build', () => {
+gulp.task('worker:build', ['clean:build'], () => {
   gulp.src('src/scripts/util/worker.js')
     .pipe(babel())
     .pipe(uglify())
@@ -136,7 +156,7 @@ gulp.task('worker:build', () => {
 });
 
 // 5. copy assets
-gulp.task('assets:build', () => {
+gulp.task('assets:build', ['clean:build'], () => {
   gulp.src('src/sass/flag-icon/flags/**/*.*', { base: './src/sass/flag-icon' })
     .pipe(gulp.dest(dirs.dist));
   gulp.src('./assets/*.*', { base: './' })
@@ -144,7 +164,7 @@ gulp.task('assets:build', () => {
 });
 
 // 6. Compile sass to css
-gulp.task('sass:build', () => (
+gulp.task('sass:build', ['clean:build'], () => (
   gulp.src('src/sass/**/*.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(concat('styles.css'))
@@ -158,9 +178,8 @@ gulp.task('sass:build', () => (
     .pipe(connect.reload())
 ));
 
-// 7. Inline critial styles - it's crashing
-// TODO: investigate
-gulp.task('critical', () => {
+// 7. Inline critial styles
+gulp.task('critical', ['html:build', 'sass:build'], () => {
   critical.generate({
     inline: true,
     base: 'dist/',
@@ -174,7 +193,7 @@ gulp.task('critical', () => {
   });
 });
 
-gulp.task('test-build', () => {
+gulp.task('test-build', ['clean:build', 'html:build', 'scripts:build', 'worker:build', 'assets:build', 'sass:build', 'critical'], () => {
   connect.server({
     root: dirs.dist,
     livereload: false,
@@ -184,5 +203,5 @@ gulp.task('test-build', () => {
 
 // The good stuff
 gulp.task('serve', ['clean', 'html', 'scripts', 'worker', 'assets', 'sass', 'connect', 'watch']);
-gulp.task('build', ['clean:build', 'html:build', 'scripts:build', 'worker:build', 'assets:build', 'sass:build', 'test-build']);
+gulp.task('build', ['clean:build', 'html:build', 'scripts:build', 'worker:build', 'assets:build', 'sass:build', 'critical', 'test-build']);
 gulp.task('default', ['serve']);
