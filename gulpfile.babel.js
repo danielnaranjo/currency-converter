@@ -9,6 +9,7 @@ import connect from 'gulp-connect';
 import concat from 'gulp-concat';
 import sass from 'gulp-sass';
 import del from 'del';
+import babel from 'gulp-babel';
 
 const bundlerCfg = {
   entries: 'src/index.js',
