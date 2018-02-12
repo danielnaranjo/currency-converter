@@ -1,9 +1,73 @@
 <html>
   <head>
+    <title>Currency Conventer</title>
+    <meta name="viewport" content="user-scalable=0">
+    <!-- Own styles -->
     <link rel="stylesheet" href="styles.css">
+    <!-- External styles -->
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
   </head>
   <body>
-    <h1 class="pink">Hello</h1>
-    <script src="scripts.js"></script>
+    <div id="sidebar">
+      <i class="far fa-times-circle fa-2x" id="sidebar-close"></i>
+    </div>
+    <div id="app">
+      <nav class="navbar">
+        <i class="fas fa-bars fa-3x" id="menu-handle"></i>
+        <header>
+          Currency Conventer
+        </header>
+        <i class="fas fa-sync fa-3x" id="spinner"></i>
+      </nav>
+      <div class="display">
+        <div class="value" id="input-display">0</div>
+        <div class="currency" id="base-currency"></div>
+        <div class="relaxed hidden value" id="exchange-sign">
+          <i class="fas fa-exchange-alt"></i>
+        </div>
+        <div class="hidden value" id="output-display"></div>
+        <div class="hidden currency" id="target-currency"></div>
+      </div>
+      <div class="keyboard">
+        <div class="digit">
+          7
+        </div>
+        <div class="digit">
+          8
+        </div>
+        <div class="digit">
+          9
+        </div>
+        <div class="digit">
+          4
+        </div>
+        <div class="digit">
+          5
+        </div>
+        <div class="digit">
+          6
+        </div>
+        <div class="digit">
+          1
+        </div>
+        <div class="digit">
+          2
+        </div>
+        <div class="digit">
+          3
+        </div>
+        <div class="digit">
+          C
+        </div>
+        <div class="digit">
+          0
+        </div>
+        <div class="digit">
+          =
+        </div>
+      </div>
+    </div>
+    <!-- Scripts -->
+    <script type="text/javascript" src="scripts.js"></script>
   </body>
 </html>
