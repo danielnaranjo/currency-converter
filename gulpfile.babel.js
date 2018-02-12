@@ -176,5 +176,5 @@ gulp.task('sass:build', () => (
 
 // The good stuff
 gulp.task('serve', ['clean', 'html', 'scripts', 'worker', 'assets', 'sass', 'connect', 'watch']);
-gulp.task('build', ['clean:build', 'html:build', 'scripts:build', 'worker:build', 'assets:build', 'sass:build', 'critical', 'connect:build']);
+gulp.task('build', ['clean:build', 'html:build', 'scripts:build', 'worker:build', 'assets:build', 'sass:build', 'critical']);
 gulp.task('default', ['serve']);
