@@ -46,11 +46,13 @@ export default class Model {
   }
 
   eval = () => {
-    // First find rate
+    // First find currency
     let rate;
+    let symbol;
     for (const currency of this.currencies) {
       if (currency.symbol === this.targetCurrency) {
         rate = currency.rate; // eslint-disable-line
+        symbol = currency.symbol; // eslint-disable-line
         break;
       }
     }
@@ -58,7 +60,9 @@ export default class Model {
 
     const base = Number(this.input);
     const result = ((base * 10000) * (rate * 10000)) / 100000000;
-    this.output = precisionRound(result, 2).toString();
+    const precision = symbol === 'JPY' ? 0 : 2;
+    this.input = precisionRound(base, precision).toFixed(precision);
+    this.output = precisionRound(result, precision).toFixed(precision);
   }
 
   transformCurrencies = (baseCurrency = this.baseCurrency) => {
