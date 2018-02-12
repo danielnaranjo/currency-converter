@@ -1,4 +1,4 @@
-importScripts('/cache-polyfill.js');
+importScripts('/cache-polyfill.js'); // eslint-disable-line
 
 const CACHE_NAME = 'cache';
 
@@ -12,13 +12,12 @@ self.addEventListener('install', (event) => {
 // eslint-disable-next-line
 self.addEventListener('fetch', (event) => {
   event.respondWith(caches.match(event.request)
-    .then((response) => {
+    .then((resp) => {
       // Cache hit - return response
-      if (response) {
-        return response;
+      if (resp) {
+        return resp;
       }
       const fetchRequest = event.request.clone();
-      // eslint-disable-next-line
       return fetch(fetchRequest).then((response) => {
         // Check if we received a valid response
         if (!response || response.status !== 200 || response.type !== 'basic') {
@@ -30,7 +29,7 @@ self.addEventListener('fetch', (event) => {
           .then((cache) => {
             cache.put(event.request, responseToCache);
           })
-          .catch(err => console.error(err));
+          .catch(() => console.error('Could not open the cache!'));
         return response;
       });
     }));
