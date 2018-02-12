@@ -37,6 +37,16 @@ export default class Model {
     this.input = '0';
   }
 
+  setInput = (input = '') => {
+    if (typeof input !== 'string') throw new Error('Invalid argument!');
+    this.input = input;
+  }
+
+  setOutput = (output = '') => {
+    if (typeof output !== 'string') throw new Error('Invalid argument!');
+    this.output = output;
+  }
+
   switchToInputMode = () => {
     this.inputMode = true;
   }
