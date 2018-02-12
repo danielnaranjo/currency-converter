@@ -90,7 +90,6 @@ export default class Controller {
   appendInput = (input) => {
     const { model } = this;
     if (!model.inputMode) this.cancel();
-    if (model.loading) return;
     model.appendInput(input);
   }
 
@@ -107,7 +106,6 @@ export default class Controller {
 
   eval = () => {
     const { view, model } = this;
-    if (model.loading) return;
     if (Number(model.input) !== 0) {
       model.eval();
       model.switchOffInputMode();

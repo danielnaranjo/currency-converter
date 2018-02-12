@@ -3,7 +3,6 @@ import { precisionRound, staticRates } from './util';
 export default class Model {
 
   sidebarVisible = false;
-  loading = true;
   network = true;
 
   input = '0';
@@ -197,7 +196,6 @@ export default class Model {
       symbol: 'EUR',
       rate: 1.0,
     });
-    this.loading = false;
   }
 
   setConnection = (connection = true) => {
