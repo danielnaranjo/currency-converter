@@ -80,8 +80,8 @@ gulp.task('worker', ['clean:worker'], () => {
 });
 
 gulp.task('assets', ['clean'], () => {
-  gulp.src('./assets/*.*', { base: './' })
-    .pipe(gulp.dest(dirs.dist));
+  gulp.src('./assets/*', { base: './' })
+    .pipe(gulp.dest(dirs.tmp));
 });
 
 gulp.task('sass', ['clean:css'], () => (
