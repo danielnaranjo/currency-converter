@@ -95,10 +95,9 @@ export default class Model {
   }
 
   switchTarget = () => {
-    const { model } = this;
-    model.setInput(model.output);
-    const base = model.baseCurrency;
-    const target = model.targetCurrency;
+    this.setInput(this.output);
+    const base = this.baseCurrency;
+    const target = this.targetCurrency;
     this.setBaseCurrency(target);
     this.setTargetCurrency(base);
     this.transformCurrencies();
