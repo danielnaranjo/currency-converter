@@ -8,12 +8,12 @@ Made using pure ES6, SASS and HTML.
 
 
 ## Set up for development
-Make sure you have [npm](https://www.npmjs.com/) [Node.JS](https://nodejs.org/), then:
+Make sure you have [npm](https://www.npmjs.com/) and [Node.JS](https://nodejs.org/) installed, then:
 ```
 npm install
 npm start
 ```
-This should start a new server on `http://localhost:3000/`.
+This should start a new server on `http://localhost:3000/` serving files from `./tmp`.
 
 ## Build
 ```
