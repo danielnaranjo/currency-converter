@@ -80,7 +80,7 @@ gulp.task('worker', ['clean:worker'], () => {
 });
 
 gulp.task('assets', ['clean'], () => {
-  gulp.src('./assets/*', { base: './' })
+  gulp.src('./assets/*', { base: './assets' })
     .pipe(gulp.dest(dirs.tmp));
 });
 
@@ -150,10 +150,8 @@ gulp.task('worker:build', ['clean:build'], () => {
 });
 
 // 5. copy assets
-gulp.task('assets:build', ['clean:build'], () => {
-  gulp.src('src/sass/flag-icon/flags/**/*.*', { base: './src/sass/flag-icon' })
-    .pipe(gulp.dest(dirs.dist));
-  gulp.src('./assets/*.*', { base: './' })
+gulp.task('assets:build', ['clean'], () => {
+  gulp.src('./assets/*', { base: './assets' })
     .pipe(gulp.dest(dirs.dist));
 });
 
