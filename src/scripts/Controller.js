@@ -302,7 +302,7 @@ export default class Controller {
       const { baseCurrency, targetCurrency, fee } = localStorage;
       model.setBaseCurrency(baseCurrency || 'EUR');
       model.setTargetCurrency(targetCurrency || 'GBP');
-      if (fee.length > 0) {
+      if (fee && fee.length > 0) {
         try {
           model.fee = JSON.parse(fee);
         } catch (err) {
