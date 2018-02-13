@@ -23,6 +23,7 @@ export default class Controller {
       await model.fetchAndParseData();
       view.spinner.dispatchEvent(fetchEnd);
     } catch (err) {
+      console.warn(err);
       view.spinner.dispatchEvent(fetchEnd);
       model.setConnection(false);
       if ('localStorage' in window) {

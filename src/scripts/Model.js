@@ -172,12 +172,17 @@ export default class Model {
   }
 
   fetchAndParseData = async () => {
-    const targetUrl = 'https://devweb2017.cis.strath.ac.uk/~aes02112/ecbxml.php';
-    const response = await fetch(targetUrl);
+    const targetUrl = 'https://cors-anywhere.herokuapp.com/https://devweb2017.cis.strath.ac.uk/~aes02112/ecbxml.php';
+    const response = await fetch(targetUrl, {
+      mode: 'cors',
+      cache: 'no-cache',
+      redirect: 'follow',
+    });
     if (!response.ok) {
+      console.warn('Response failed!', response);
       throw new Error(response);
     }
-
+    console.log('Rates fetch success!');
     // Parse response
     const data = await response.text();
     const parser = new DOMParser();
@@ -190,6 +195,7 @@ export default class Model {
         this.currencies.push({ symbol, rate });
       }
     }
+    console.log('Parse success', this.currencies);
     // add euros as well
     this.currencies.unshift({
       symbol: 'EUR',
