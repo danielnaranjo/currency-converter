@@ -2,9 +2,9 @@
 Simple travel currency converter.
 Made using pure ES6, SASS and HTML.
 
-[screenshot1]: https://github.com/mandriv/cs317-currency-converter/blob/master/readme-screenshots/screenshot1.png Screenshot 1
-[screenshot2]:https://github.com/mandriv/cs317-currency-converter/blob/master/readme-screenshots/screenshot2.png Screenshot 2
-![Screenshot one][screenshot1] ![Screenshot two][screenshot2]
+[screenshot1]: https://raw.githubusercontent.com/mandriv/cs317-currency-converter/master/readme-screenshots/screenshot1.png
+[screenshot2]: https://raw.githubusercontent.com/mandriv/cs317-currency-converter/master/readme-screenshots/screenshot2.png
+![][screenshot1] ![][screenshot2]
 
 
 Check out in action - https://devweb2017.cis.strath.ac.uk/~mjb15167/
