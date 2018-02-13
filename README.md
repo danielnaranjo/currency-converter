@@ -7,8 +7,6 @@ Made using pure ES6, SASS and HTML.
 ![][screenshot1] ![][screenshot2]
 
 
-Check out in action - https://devweb2017.cis.strath.ac.uk/~mjb15167/
-
 ## Set up for development
 Make sure you have [npm](https://www.npmjs.com/) [Node.JS](https://nodejs.org/), then:
 ```
