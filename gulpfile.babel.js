@@ -88,16 +88,13 @@ gulp.task('sass', ['clean:css'], () => (
   gulp.src('src/sass/**/*.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(concat('styles.css'))
+    .pipe(autoprefixer({
+      browsers: '> 5%',
+      grid: true,
+    }))
     .pipe(gulp.dest(dirs.tmp))
     .pipe(connect.reload())
 ));
-
-gulp.task('watch', ['clean', 'html', 'scripts', 'worker', 'assets', 'sass', 'connect'], () => {
-  gulp.watch(['src/**/*.html'], ['html']);
-  gulp.watch(['src/**/*.js'], ['scripts']);
-  gulp.watch(['src/scripts/util/worker.js', 'src/scripts/util/cache-polyfill.js'], ['worker']);
-  gulp.watch(['src/**/*.scss'], ['sass']);
-});
 
 gulp.task('connect', () => {
   connect.server({
@@ -196,6 +193,13 @@ gulp.task('test-build', ['clean:build', 'html:build', 'scripts:build', 'worker:b
     livereload: false,
     port: 3000,
   });
+});
+
+gulp.task('watch', ['clean', 'html', 'scripts', 'worker', 'assets', 'sass', 'connect'], () => {
+  gulp.watch(['src/**/*.html'], ['html']);
+  gulp.watch(['src/**/*.js'], ['scripts']);
+  gulp.watch(['src/scripts/util/worker.js', 'src/scripts/util/cache-polyfill.js'], ['worker']);
+  gulp.watch(['src/**/*.scss'], ['sass']);
 });
 
 // The good stuff
