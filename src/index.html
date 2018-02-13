@@ -39,56 +39,56 @@
     <!-- Main content -->
     <div id="app">
       <nav class="navbar">
-        <i class="fas fa-bars fa-3x" id="menu-handle"></i>
+        <i class="fas fa-bars fa-3x clickable-ios" id="menu-handle"></i>
         <header>
           Currency Converter
         </header>
-        <i class="fas fa-sync fa-3x" id="spinner"></i>
+        <i class="fas fa-sync fa-3x clickable-ios" id="spinner"></i>
       </nav>
       <div class="display">
         <div class="value" id="input-display">0</div>
         <div class="currency" id="base-currency"></div>
-        <div class="relaxed hidden value" id="exchange-sign">
+        <div class="relaxed hidden value clickable-ios" id="exchange-sign">
           <i class="fas fa-exchange-alt"></i>
         </div>
         <div class="hidden value" id="output-display"></div>
         <div class="hidden currency" id="target-currency"></div>
       </div>
       <div class="keyboard">
-        <div class="digit">
+        <div class="digit clickable-ios">
           7
         </div>
-        <div class="digit">
+        <div class="digit clickable-ios">
           8
         </div>
-        <div class="digit">
+        <div class="digit clickable-ios">
           9
         </div>
-        <div class="digit">
+        <div class="digit clickable-ios">
           4
         </div>
-        <div class="digit">
+        <div class="digit clickable-ios">
           5
         </div>
-        <div class="digit">
+        <div class="digit clickable-ios">
           6
         </div>
-        <div class="digit">
+        <div class="digit clickable-ios">
           1
         </div>
-        <div class="digit">
+        <div class="digit clickable-ios">
           2
         </div>
-        <div class="digit">
+        <div class="digit clickable-ios">
           3
         </div>
-        <div class="digit">
+        <div class="digit clickable-ios">
           C
         </div>
-        <div class="digit">
+        <div class="digit clickable-ios">
           0
         </div>
-        <div class="digit">
+        <div class="digit clickable-ios">
           =
         </div>
       </div>
@@ -97,7 +97,7 @@
     <div id="country-modal" class="modal hidden">
       <div class="title" id="country-modal-title"></div>
       <ul id="country-list" class="content"></ul>
-      <div class="bottom" id="country-modal-close">
+      <div class="bottom clickable-ios" id="country-modal-close">
         Close
       </div>
     </div>
@@ -105,10 +105,10 @@
     <div id="bank-modal" class="modal hidden">
       <div class="title" id="bank-modal-title"></div>
       <div class="content grid">
-        <div class="arrow up item" id="increment-first-btn"><i class="fas fa-angle-up"></i></div>
+        <div class="arrow up item clickable-ios" id="increment-first-btn"><i class="fas fa-angle-up"></i></div>
         <div class="item"></div>
-        <div class="arrow up item" id="increment-second-btn"><i class="fas fa-angle-up"></i></div>
-        <div class="arrow up item" id="increment-third-btn"><i class="fas fa-angle-up"></i></div>
+        <div class="arrow up item clickable-ios" id="increment-second-btn"><i class="fas fa-angle-up"></i></div>
+        <div class="arrow up item clickable-ios" id="increment-third-btn"><i class="fas fa-angle-up"></i></div>
         <div class="item"></div>
 
         <div class="center number item" id="bank-fee-first-digit"></div>
@@ -117,33 +117,33 @@
         <div class="center number item" id="bank-fee-third-digit"></div>
         <div class="center number item">%</div>
 
-        <div class="arrow down item" id="decrement-first-btn"><i class="fas fa-angle-down"></i></div>
+        <div class="arrow down item clickable-ios" id="decrement-first-btn"><i class="fas fa-angle-down"></i></div>
         <div class="item"></div>
-        <div class="arrow down item" id="decrement-second-btn"><i class="fas fa-angle-down"></i></div>
-        <div class="arrow down item" id="decrement-third-btn"><i class="fas fa-angle-down"></i></div>
+        <div class="arrow down item clickable-ios" id="decrement-second-btn"><i class="fas fa-angle-down"></i></div>
+        <div class="arrow down item clickable-ios" id="decrement-third-btn"><i class="fas fa-angle-down"></i></div>
         <div class="item"></div>
       </div>
-      <div class="bottom" id="bank-modal-close">
+      <div class="bottom clickable-ios" id="bank-modal-close">
         Save
       </div>
     </div>
     <!-- Sidebar -->
     <div id="sidebar">
-      <div class="close">
+      <div class="close clickable-ios">
         <i class="far fa-times-circle" id="sidebar-close"></i>
       </div>
       <div class="state">
         <span id="base-currency-sidebar">EUR</span>
-        <i class="fas fa-exchange-alt" id="exchange-sign-sidebar"></i>
+        <i class="fas fa-exchange-alt clickable-ios" id="exchange-sign-sidebar"></i>
         <span id="target-currency-sidebar">GBP</span>
       </div>
-      <div class="item" id="change-source">
+      <div class="item clickable-ios" id="change-source">
         Change source currency
       </div>
-      <div class="item" id="change-target">
+      <div class="item clickable-ios" id="change-target">
         Change target currency
       </div>
-      <div class="item" id="change-bank-fee">
+      <div class="item clickable-ios" id="change-bank-fee">
         Set bank fee
       </div>
     </div>
