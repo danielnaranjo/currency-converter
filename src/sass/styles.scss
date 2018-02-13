@@ -4,10 +4,16 @@ $dark-denim: #34495e;
 $snap-shot: #2c3e50;
 $blue: #3498db;
 $white-smoke: #F5F5F5;
-body {
+
+html, body {
   font-family: 'Lato', sans-serif;
-  user-select: none;
   overflow: hidden;
+  user-select: none;
+  background-color: $snap-shot;
+}
+
+body {
+  position: relative;
 }
 
 #app {
